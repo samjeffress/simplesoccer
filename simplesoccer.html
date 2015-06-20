@@ -1,14 +1,37 @@
 <head>
-  <title>simplesoccer</title>
+  <title>Simple Soccer</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <div class="container">
+	  <h1>Manage your team</h1>
 
-  {{> hello}}
+	  {{> setup_game}}
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="setup_game">
+	<form class="manage-game form">
+		<div class="form-group">
+			<label for="subs">Number of substitutions:</label>
+			<input type="text" class="form-control" id="subs" value="unlimited">
+		</div>
+		<div class="form-group">
+			<label for="interval-count">Number of intervals:</label>
+			<input type="text" class="form-control" id="interval-count" value="2">
+		</div>
+		<div class="form-group">
+			<label for="interval-length">Length of interval</label>
+			<input type="text" class="form-control" id="interval-length" value="10">
+		</div>
+		<div class="form-group">
+			<label for="players-on-field">Number of players on field</label>
+			<input type="text" class="form-control" id="players-on-field">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
 </template>

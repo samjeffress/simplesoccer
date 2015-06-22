@@ -1,22 +1,31 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+GameConfigs = new Mongo.Collection("gameconfigs");
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+if (Meteor.isClient) {
+
+  Template.gameConfig.helpers({
+    configuration: function(){
+      config = GameConfigs.find({});
+      console.log(config);
+      return config;
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+  Template.setupGame.events({
+    'submit .newGame':function(events){
+      console.log(events.target);
+      GameConfigs.insert({
+        subs: event.target.subs.value,
+        intervalCount: event.target.intervalCount.value,
+        intervalLength: event.target.intervalLength.value,
+        playersOnField: event.target.playersOnField.value,
+        createdAt: new Date()
+      });
+      return false;
     }
   });
 }
 
-if (Meteor.isServer) {
+if (Meteor.isServer) { 
   Meteor.startup(function () {
     // code to run on server at startup
   });

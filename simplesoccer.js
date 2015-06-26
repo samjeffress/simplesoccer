@@ -1,4 +1,5 @@
 GameConfigs = new Mongo.Collection("gameconfigs");
+Game = new Mongo.Collection("game")
 
 if (Meteor.isClient) {
 
@@ -10,14 +11,26 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.setupGame.events({
-    'submit .newGame':function(events){
+  Template.setupConfiguration.events({
+    'submit .newConfiguration':function(events){
       console.log(events.target);
       GameConfigs.insert({
         subs: event.target.subs.value,
         intervalCount: event.target.intervalCount.value,
         intervalLength: event.target.intervalLength.value,
         playersOnField: event.target.playersOnField.value,
+        createdAt: new Date()
+      });
+      return false;
+    }
+  });
+
+  Template.setupGame.events({
+    'submit .newGame':function(events){
+      console.log(events.target);
+      Game.insert({
+        gameTitle: event.target.gameTitle.value,
+        playerList: event.target.players.value,
         createdAt: new Date()
       });
       return false;

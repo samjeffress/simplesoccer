@@ -12,6 +12,8 @@
 
 	  {{> gameConfig}}
 	  {{> setupGame}}
+
+	  {{> startableGames}}
   </div>
 </body>
 
@@ -50,10 +52,18 @@
 		</ul>
 	{{/each}}
 {{else}}
-	{{> setupGame}}
+	{{> setupConfiguration}}
 {{/if}}
 	</div>
+</template>
 
+<template name="startableGames">
+<h3>Startable games...</h3>
+	<ul>
+	{{#each unstartedGames}}
+		<li>{{gameTitle}} <button class="btn btn-default start">Start</button></li>
+	{{/each}}
+	</ul>
 </template>
 
 <template name="setupGame">

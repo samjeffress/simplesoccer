@@ -7,7 +7,11 @@
 
 <body>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+
+<template name="home">
   <div class="container">
+
 	  <h1>Manage your team</h1>
 
 	  {{> gameConfig}}
@@ -15,7 +19,7 @@
 
 	  {{> startableGames}}
   </div>
-</body>
+</template>
 
 <template name="setupConfiguration">
 	<form class="newConfiguration form">
@@ -61,7 +65,7 @@
 <h3>Startable games...</h3>
 	<ul>
 	{{#each unstartedGames}}
-		<li>{{gameTitle}} <button class="btn btn-default start">Start</button></li>
+		<li>{{gameTitle}} <a href="/game/{{_id}}">start</a></li>
 	{{/each}}
 	</ul>
 </template>

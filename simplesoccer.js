@@ -1,5 +1,17 @@
 GameConfigs = new Mongo.Collection("gameconfigs");
 Games = new Mongo.Collection("games")
+Router.route('/', function(){
+  this.render('home');
+})
+Router.route('/game')
+Router.route('/game/:_id', function(){
+  this.render('game', {
+    data: function(){
+      return Games.findOne({_id:this.params._id})
+    }
+  });
+});
+
 
 if (Meteor.isClient) {
 

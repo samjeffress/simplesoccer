@@ -12,9 +12,8 @@ Router.route('/game/:_id', function(){
   });
 });
 
-
+    
 if (Meteor.isClient) {
-
   Template.gameConfig.helpers({
     configuration: function(){
       config = GameConfigs.find({});
@@ -42,6 +41,7 @@ if (Meteor.isClient) {
     'submit .newGame':function(event){
       event.preventDefault();
       console.log(event.target);
+      // TODO: Get list of names from array of fields
       Games.insert({
         gameTitle: event.target.gameTitle.value,
         playerList: event.target.playerList.value,
@@ -49,6 +49,16 @@ if (Meteor.isClient) {
         status: "unstarted"
       });
       return false;
+    },
+
+    'keypress #playerList input':function(event){
+      var container = document.getElementById("playerList");
+      var input = document.createElement("input")
+      input.type = "text"
+      input.className = "form-control"
+      input.placeholder = "another name"
+      // TODO: add id (is this necessary?)
+      container.appendChild(input);
     }
   });
 

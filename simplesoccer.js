@@ -41,24 +41,46 @@ if (Meteor.isClient) {
     'submit .newGame':function(event){
       event.preventDefault();
       console.log(event.target);
+
+console.log($("[id^=player-]"));
+var players = [];
+existingPlayers =  $("[id^=player-]").each(function(){
+  if(this.value.length > 0){
+    players.push(this.value);
+  }
+});
+console.log(players);
       // TODO: Get list of names from array of fields
       Games.insert({
         gameTitle: event.target.gameTitle.value,
-        playerList: event.target.playerList.value,
+        playerList: players,
         createdAt: new Date(),
         status: "unstarted"
       });
       return false;
     },
 
-    'keypress #playerList input':function(event){
-      var container = document.getElementById("playerList");
-      var input = document.createElement("input")
-      input.type = "text"
-      input.className = "form-control"
-      input.placeholder = "another name"
-      // TODO: add id (is this necessary?)
-      container.appendChild(input);
+    'keyup #playerList input':function(event){
+      // Check if there is already a blank field
+  console.log(event.target);
+  var maxCounter = 0;
+existingPlayers =  $("[id^=player-]").each(function(){
+  var playerNumber = this.id.replace("player-", "");
+  if (maxCounter < parseInt(playerNumber)){
+    maxCounter = parseInt(playerNumber);
+  }
+});
+  
+      var text = event.target.value;
+      if (text.length == 1){
+        var container = document.getElementById("playerList");
+        var input = document.createElement("input")
+        input.type = "text"
+        input.className = "form-control"
+        input.placeholder = "another name"
+        input.id = "player-" + (maxCounter + 1);
+        container.appendChild(input);
+      }
     }
   });
 

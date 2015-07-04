@@ -1,8 +1,15 @@
 <template name="game">
   <div class="container">
 	  <h1>Start your game {{gameTitle}}</h1>
-    <p>more awesomeness to come</p>
+        {{> gameConfig}}
     <p>an id: {{_id}}</p>
     <p>Players: {{playerList}}</p>
+    <p id="intervalElapsed"></p>
+    <p id="substitution"></p>
+    <div>
+      <form class="startGame">
+        <input type="submit" />
+      </form>
+    </div>
   </div>
 </template>

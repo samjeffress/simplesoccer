@@ -19,18 +19,22 @@ function calculateInterchange(playerList, timespan, playersOnFieldAtATime){
  	var interchange = [];
  	for (i = 0; i < playerList.length; i++){
  		if (i+1 == playerList.length){
+ 			var time = Math.floor(timespanBetweenSubstitution * i/1000);
+ 			var friendlyTime = moment.utc(timespanBetweenSubstitution * i).format("mm:ss");
  	 	 	interchange.push(
 	 	 		{
 	 	 			on: playerList[i],
 	 	 			off: playerList[0], 
-	 	 			time: Math.floor(timespanBetweenSubstitution * i/1000)
+	 	 			time: time,
+	 	 			friendlyTime: friendlyTime
 	 	 		});			
  		}else{
 	 	 	interchange.push(
 	 	 		{
 	 	 			on: playerList[i],
 	 	 			off: playerList[i+1], 
-	 	 			time: Math.floor(timespanBetweenSubstitution * i/1000)
+	 	 			time: time,
+	 	 			friendlyTime: friendlyTime
 	 	 		});
  	 	}
  	}
@@ -44,7 +48,17 @@ if (Meteor.isClient) {
       config = GameConfigs.find({});
       console.log(config);
       return config;
-    }});
+    },
+
+    interchangeSchedule: function(){
+    	config = GameConfigs.find({});
+			cfg = config.fetch()[0];
+		  timespan = parseInt(cfg.intervalLength) * 60 * 1000;
+			var schedule = calculateInterchange(this.playerList, timespan, parseInt(cfg.playersOnField));
+			return schedule;
+    }
+
+  });
 
 	Template.game.events({
 		'submit .startGame':function(event){

@@ -18,9 +18,9 @@ function calculateInterchange(playerList, timespan, playersOnFieldAtATime){
  	// only need to cover the case where we have more people than spots
  	var interchange = [];
  	for (i = 0; i < playerList.length; i++){
+		var time = Math.floor(timespanBetweenSubstitution * i / 1000);
+		var friendlyTime = moment.utc(timespanBetweenSubstitution * i).format("mm:ss"); 		
  		if (i+1 == playerList.length){
- 			var time = Math.floor(timespanBetweenSubstitution * i/1000);
- 			var friendlyTime = moment.utc(timespanBetweenSubstitution * i).format("mm:ss");
  	 	 	interchange.push(
 	 	 		{
 	 	 			on: playerList[i],

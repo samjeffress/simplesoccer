@@ -12,9 +12,9 @@
       </form>
     </div>
     <div>  
-    {{#if interchangeSchedule}}
+    {{#if schedule}}
       <ol class="list-group">
-      {{#each interchangeSchedule}}
+      {{#each schedule}}
         <li class="list-group-item"><span style="color:green" class="glyphicon glyphicon-arrow-up"></span><span class="sr-only">On:</span>{{on}} <span style="color:red" class="glyphicon glyphicon-arrow-down"></span><span class="sr-only">Off:</span>{{off}} at {{friendlyTime}}</li>
       {{/each}}
       </ol>

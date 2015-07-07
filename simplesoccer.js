@@ -1,5 +1,37 @@
+function calculateInterchange(playerList, timespan, playersOnFieldAtATime){
+  // TODO: Get this right
+  var percentageOfTimeOnFieldPerPlayer = playerList.length / playersOnFieldAtATime;
+  var timespanBetweenSubstitution = timespan / playerList.length; 
+  // only need to cover the case where we have more people than spots
+  var interchange = [];
+  for (i = 0; i < playerList.length; i++){
+    var time = Math.floor(timespanBetweenSubstitution * i / 1000);
+    var friendlyTime = moment.utc(timespanBetweenSubstitution * i).format("mm:ss");     
+    if (i+1 == playerList.length){
+      interchange.push(
+        {
+          on: playerList[i],
+          off: playerList[0], 
+          time: time,
+          friendlyTime: friendlyTime
+        });     
+    }else{
+      interchange.push(
+        {
+          on: playerList[i],
+          off: playerList[i+1], 
+          time: time,
+          friendlyTime: friendlyTime
+        });
+    }
+  }
+
+  return interchange;
+}
+
 GameConfigs = new Mongo.Collection("gameconfigs");
 Games = new Mongo.Collection("games")
+Schedules = new Mongo.Collection("schedules")
 Router.route('/', function(){
   this.render('home');
 })
@@ -42,20 +74,25 @@ if (Meteor.isClient) {
       event.preventDefault();
       console.log(event.target);
 
-console.log($("[id^=player-]"));
-var players = [];
-existingPlayers =  $("[id^=player-]").each(function(){
-  if(this.value.length > 0){
-    players.push(this.value);
-  }
-});
-console.log(players);
-      // TODO: Get list of names from array of fields
+      var players = [];
+      existingPlayers =  $("[id^=player-]").each(function(){
+        if(this.value.length > 0){
+          players.push(this.value);
+        }
+      });
+
+      config = GameConfigs.find({});
+      cfg = config.fetch()[0];
+      timespan = parseInt(cfg.intervalLength) * 60 * 1000;
+      var schedule = calculateInterchange(players, timespan, parseInt(cfg.playersOnField));
+
       Games.insert({
         gameTitle: event.target.gameTitle.value,
         playerList: players,
         createdAt: new Date(),
-        status: "unstarted"
+        status: "unstarted",
+        schedule: schedule,
+        config: cfg
       });
       return false;
     },

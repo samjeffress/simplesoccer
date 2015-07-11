@@ -1,6 +1,7 @@
 <template name="game">
   <div class="container">
 	  <h1>Start your game {{gameTitle}}</h1>
+    <!-- probably force this to use model rather game config rather than from database (already saved config for this game) -->
         {{> gameConfig}}
     <p>an id: {{_id}}</p>
     <p>Players: {{playerList}}</p>

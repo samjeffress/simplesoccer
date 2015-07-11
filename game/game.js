@@ -22,11 +22,8 @@ if (Meteor.isClient) {
 	Template.game.events({
 		'submit .startGame':function(event){
 		  event.preventDefault();
-
-		 //  config = GameConfigs.find({});
-			// cfg = config.fetch()[0];
 		  timespan = parseInt(this.config.intervalLength) * 60 * 1000;
-
+var schedule = this.schedule;
 			timer(
 		    timespan, // milliseconds
 		    function(timeleft) { // called every step to update the visible countdown
